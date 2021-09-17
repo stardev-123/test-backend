@@ -1,0 +1,8 @@
+.idea
+.git
+node_modules
+.scannerwork
+sonar-project.properties
+npm-debug.log
+doc
+log
