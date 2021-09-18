@@ -1,6 +1,6 @@
 const config = {
   env: 'PROD',
-  serverUrl: 'https://api.onrampinvest.com/',
+  serverUrl: 'https://onramp-new-backend.herokuapp.com/',
   website: {
     page: 'https://onrampinvest.com/',
     forgothPassword: 'forgoth-password.html'
