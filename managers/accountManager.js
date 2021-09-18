@@ -326,7 +326,7 @@ exports.login = async (req, email, password, code, deviceId) => {
     }
     const { token, refreshToken } = _generateTokens(req, found, { deviceId })
     // const accounts = await _getAccountForUser('1060', req)
-    const accounts = {
+    const account = {
       "id": 824,
       "name": "Chase - Plaid Checking",
       "mask": "0000",
@@ -335,6 +335,8 @@ exports.login = async (req, email, password, code, deviceId) => {
       "primary": true,
       "institution": "Chase"
     }
+    const accounts = []
+    accounts.push(account)
     const balance = await assetManager.getBalance('1060')
     const portfolio = await assetManager.getPortfolioForUser('1060', req)
     return {
