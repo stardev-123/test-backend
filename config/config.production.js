@@ -129,7 +129,7 @@ const config = {
     COIN_PRICE_PRECISION: 2,
     COIN_AMOUNT_PRECISION: 8
   },
-  cryptoProvider: 'tradeblock',
+  cryptoProvider: 'gemini',
   cryptoPricesProvider: 'coincap',
   checkPriceDifference: 5,
   allowNotVerified: false,
