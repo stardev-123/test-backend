@@ -75,6 +75,11 @@ exports.getBalance = async (userId) => {
   prices.forEach(({ symbol, USD }) => { coinPriceMap[symbol] = USD })
 
   // const wallets = await models.wallet.findByForUser(userId, { raw: true, attributes: ['currency', 'amount', 'pending'] })
+
+  logger.error(cryptoManager)
+  logger.error(cryptoManager.getBalances)
+  console.log(cryptoManager)
+  console.log(cryptoManager.getBalances)
   const wallets = await cryptoManager.getBalances()
 
   wallets.forEach(wallet => {
