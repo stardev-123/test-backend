@@ -1,4 +1,4 @@
-const models = require('../database/models')
+// const models = require('../database/models')
 const error = require('../lib/error')
 
 module.exports.checkIsTradingRules = async (req, res, next) => {

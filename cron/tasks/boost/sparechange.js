@@ -3,7 +3,7 @@
  */
 
 const moment = require('moment')
-const models = require('../../../database/models')
+// const models = require('../../../database/models')
 const paymentManager = require('../../../managers/payment')
 const assetManager = require('../../../managers/assetManager')
 const boostManager = require('../../../managers/boostManager')

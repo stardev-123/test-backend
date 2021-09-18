@@ -4,7 +4,7 @@
 
 const moment = require('moment')
 const util = require('../../../lib/util')
-const models = require('../../../database/models')
+// const models = require('../../../database/models')
 const assetManager = require('../../../managers/assetManager')
 const paymentManager = require('../../../managers/payment')
 const boostManager = require('../../../managers/boostManager')

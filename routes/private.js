@@ -6,8 +6,8 @@ const router = require('express').Router()
 const decimalFormatterMiddleware = require('../middleware/decimalFormatterMiddleware')
 const userRoutes = require('./user')
 const paymentRoutes = require('./payment')
-const deviceRoutes = require('./device')
-const boostRoutes = require('./boost')
+// const deviceRoutes = require('./device')
+// const boostRoutes = require('./boost')
 const config = require('../config')
 
 const _getAppConfig = (req, res, next) => {
@@ -25,8 +25,8 @@ const _getAppConfig = (req, res, next) => {
 
 router.use(userRoutes)
 router.use(paymentRoutes)
-router.use(deviceRoutes)
-router.use(boostRoutes)
+// router.use(deviceRoutes)
+// router.use(boostRoutes)
 router.get('/config', decimalFormatterMiddleware.formatOutputFields('/config'), _getAppConfig)
 
 module.exports = router

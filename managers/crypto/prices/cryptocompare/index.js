@@ -3,7 +3,7 @@
  */
 
 const Request = require('request')
-const models = require('../../../../database/models')
+// const models = require('../../../../database/models')
 
 module.exports.getPrices = () => {
   return new Promise((resolve, reject) => {

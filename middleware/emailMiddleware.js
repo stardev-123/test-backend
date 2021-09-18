@@ -2,7 +2,7 @@
  * Created by laslo on 07/09/18.
  */
 
-const models = require('../database/models')
+// const models = require('../database/models')
 const constants = require('../lib/constants')
 const notificationManager = require('../managers/notificationManager')
 const isEmail = require('validator/lib/isEmail')

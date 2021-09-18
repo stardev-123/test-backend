@@ -1,10 +1,10 @@
-const DB = require('../setup/databaseConnection')
+// const DB = require('../setup/databaseConnection')
 const jwt = require('jsonwebtoken')
 const _ = require('lodash')
 const moment = require('moment')
 const encrypt = require('../lib/encrypt')
 const bcrypt = require('bcryptjs')
-const models = require('../database/models')
+// const models = require('../database/models')
 const assetManager = require('./assetManager')
 const Twilio = require('twilio')
 const paymentManager = require('./payment')
@@ -92,25 +92,44 @@ const _generateTokens = (req, { id, email, firstName, lastName }, data) => {
 
 const _returnBasicUserData = (user, decrypt) => {
   return {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    phoneNumber: user.phoneNumber,
-    address1: decrypt ? encrypt.decrypt(user.address1) : user.address1,
-    address2: decrypt ? encrypt.decrypt(user.address2) : user.address2,
-    aptSuite: decrypt ? encrypt.decrypt(user.aptSuite) : user.aptSuite,
-    city: decrypt ? encrypt.decrypt(user.city) : user.city,
-    state: user.state,
-    country: user.country,
-    zipcode: decrypt ? encrypt.decrypt(user.zipcode) : user.zipcode,
-    birthdate: user.birthdate,
-    ssn: user.ssn,
-    verifiedAtProvider: !!user.verifiedAtProvider,
-    investmentsCount: user.investmentsCount,
-    firstInvestment: !!user.firstInvestment,
-    confirmedResidence: !!user.confirmedResidence,
-    tosStatus: user.tosStatus
+    // id: user.id,
+    // firstName: user.firstName,
+    // lastName: user.lastName,
+    // email: user.email,
+    // phoneNumber: user.phoneNumber,
+    // address1: decrypt ? encrypt.decrypt(user.address1) : user.address1,
+    // address2: decrypt ? encrypt.decrypt(user.address2) : user.address2,
+    // aptSuite: decrypt ? encrypt.decrypt(user.aptSuite) : user.aptSuite,
+    // city: decrypt ? encrypt.decrypt(user.city) : user.city,
+    // state: user.state,
+    // country: user.country,
+    // zipcode: decrypt ? encrypt.decrypt(user.zipcode) : user.zipcode,
+    // birthdate: user.birthdate,
+    // ssn: user.ssn,
+    // verifiedAtProvider: !!user.verifiedAtProvider,
+    // investmentsCount: user.investmentsCount,
+    // firstInvestment: !!user.firstInvestment,
+    // confirmedResidence: !!user.confirmedResidence,
+    // tosStatus: user.tosStatus
+    "id": 1060,
+    "firstName": "Cullen",
+    "lastName": "Sun",
+    "email": "seniordev105@gmail.com",
+    "phoneNumber": "+1(774)482-2369",
+    "address1": "1110 Concord Avenue",
+    "address2": null,
+    "aptSuite": "",
+    "city": "Concord",
+    "state": "CA",
+    "country": "uni",
+    "zipcode": "94518",
+    "birthdate": "1990-12-31",
+    "ssn": "5555",
+    "verifiedAtProvider": false,
+    "investmentsCount": 1,
+    "firstInvestment": false,
+    "confirmedResidence": false,
+    "tosStatus": 1
   }
 }
 
@@ -301,13 +320,22 @@ module.exports.login = async (req, email, password, code, deviceId) => {
     }
 
     const { token, refreshToken } = _generateTokens(req, found, { deviceId })*/
-    const accounts = await _getAccountForUser(userId, req)
-    const balance = await assetManager.getBalance(userId)
-    const portfolio = await assetManager.getPortfolioForUser(userId, req)
+    // const accounts = await _getAccountForUser('1060', req)
+    const accounts = {
+      "id": 824,
+      "name": "Chase - Plaid Checking",
+      "mask": "0000",
+      "type": "depository",
+      "subtype": "checking",
+      "primary": true,
+      "institution": "Chase"
+    }
+    const balance = await assetManager.getBalance('1060')
+    const portfolio = await assetManager.getPortfolioForUser('1060', req)
     return {
-      token,
-      refreshToken,
-      user: _returnBasicUserData(found, true),
+      // token,
+      // refreshToken,
+      user: _returnBasicUserData(),
       accounts,
       balance,
       portfolio
@@ -320,7 +348,7 @@ module.exports.login = async (req, email, password, code, deviceId) => {
 
 module.exports.logout = async (token) => {
   const data = sessionManager.getKey(token)
-  if (data && data.refreshToken) sessionManager.removeKey(data.refreshToken)
+  // if (data && data.refreshToken) sessionManager.removeKey(data.refreshToken)
   sessionManager.removeKey(token)
 }
 

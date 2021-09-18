@@ -1,7 +1,7 @@
 const error = require('../lib/error')
 const logger = require('../lib/logger')
 const config = require('../config')
-const models = require('../database/models')
+// const models = require('../database/models')
 const jwt = require('jsonwebtoken')
 const auth = require('basic-auth')
 

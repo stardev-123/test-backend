@@ -2,7 +2,7 @@
 
 require('should')
 const nock = require('nock')
-const models = require('../database/models')
+// const models = require('../database/models')
 const btoa = require('btoa')
 const config = require('../config')
 

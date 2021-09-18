@@ -3,9 +3,9 @@
  */
 const router = require('express').Router()
 const userController = require('../controller/userController')
-const webhookController = require('../controller/webhookController')
+// const webhookController = require('../controller/webhookController')
 const emailMiddleware = require('../middleware/emailMiddleware')
-const auth = require('../middleware/authMiddleware')
+// const auth = require('../middleware/authMiddleware')
 const decimalFormatterMiddleware = require('../middleware/decimalFormatterMiddleware')
 
 /**
@@ -86,13 +86,15 @@ router.post('/login', decimalFormatterMiddleware.formatOutputFields('/login'), e
 
 router.post('/forgot', emailMiddleware.checkEmail, userController.forgotPassword)
 
-router.get('/forgot', auth.checkForgothPasswordLink, userController.generatePassword)
-router.post('/password/reset', auth.checkForgothPasswordLink, userController.resetPassword)
+router.get('/forgot', 
+// auth.checkForgothPasswordLink, 
+userController.generatePassword)
+// router.post('/password/reset', auth.checkForgothPasswordLink, userController.resetPassword)
 
-router.get('/confirm', auth.checkEmailConfirmationLink)
+// router.get('/confirm', auth.checkEmailConfirmationLink)
 
 // Dwolla send data on this route
-router.post('/webhook', webhookController.processWebHook)
+// router.post('/webhook', webhookController.processWebHook)
 
 // router.get('/user/:userId/token', auth.checkUserRefreshToken, userController.refreshAccessTokens)
 router.get('/user/:userId/token', userController.refreshAccessTokens)

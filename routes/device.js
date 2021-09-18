@@ -2,7 +2,7 @@
  * Created by laslo on 13/09/18.
  */
 const router = require('express').Router()
-const deviceController = require('../controller/deviceController')
+// const deviceController = require('../controller/deviceController')
 
 /**
  * @api {put} /user/{userId}/device/{deviceId}
@@ -25,6 +25,6 @@ const deviceController = require('../controller/deviceController')
  * @apiUse badRequest
  * @apiUse notFound
  */
-router.put('/device/:deviceId', deviceController.updateDevice)
+// router.put('/device/:deviceId', deviceController.updateDevice)
 
 module.exports = router

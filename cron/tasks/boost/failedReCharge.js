@@ -2,7 +2,7 @@
  * Created by laslo on 12/10/18.
  */
 
-const models = require('../../../database/models')
+// const models = require('../../../database/models')
 const assetManager = require('../../../managers/assetManager')
 const boostManager = require('../../../managers/boostManager')
 const paymentManager = require('../../../managers/payment')

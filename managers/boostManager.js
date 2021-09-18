@@ -1,5 +1,5 @@
 const moment = require('moment')
-const models = require('../database/models')
+// const models = require('../database/models')
 const notificationManager = require('./notificationManager')
 const logger = require('../lib/logger')
 

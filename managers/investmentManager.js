@@ -1,5 +1,5 @@
 const constants = require('../lib/constants')
-const models = require('../database/models')
+// const models = require('../database/models')
 const notificationManager = require('./notificationManager')
 const analyticsManager = require('./analytics')
 const logger = require('../lib/logger')

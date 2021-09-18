@@ -1,3 +1,4 @@
+// @ts-nocheck
 const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path')
@@ -15,7 +16,7 @@ try {
   const securityHeaders = require('./setup/securityHeaders')
 
   const attachRoutes = require('./routes')
-  const init = require('./setup/init')
+  // const init = require('./setup/init')
 
   server = express()
 
@@ -45,20 +46,20 @@ try {
   server.use('/doc', express.static(path.join(__dirname, 'doc')))
 
   // set port
-  const post = process.env.NODE_PORT || '3000'
+  const port = process.env.PORT || '3000'
   const env = process.env.NODE_ENV || 'dev'
 
   // create sequelize tables
 
   // Start web server
-  server.listen(post, async (err) => {
+  server.listen(port, async (err) => {
     if (err) {
       logger.error(null, err, 'Unable to start server')
     } else {
-      logger.info(null, `Server started on port ${post} with ${env} settings.`)
+      logger.info(null, `Server started on port ${port} with ${env} settings.`)
     }
 
-    require('./cron/cron')
+    // require('./cron/cron')
     // await init.initializeData()
     server.emit('appStarted')
   })

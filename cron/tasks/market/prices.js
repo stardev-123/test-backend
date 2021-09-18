@@ -3,7 +3,7 @@
  */
 
 const moment = require('moment')
-const models = require('../../../database/models')
+// const models = require('../../../database/models')
 const util = require('../../../lib/util')
 const cryptoManager = require('../../../managers/crypto')
 const logger = require('../../../lib/logger')

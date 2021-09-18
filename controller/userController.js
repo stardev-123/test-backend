@@ -7,7 +7,7 @@ const cryptoManager = require('../managers/crypto')
 const deviceManager = require('../managers/deviceManager')
 const notificationManager = require('../managers/notificationManager')
 const util = require('../lib/util')
-const models = require('../database/models')
+// const models = require('../database/models')
 const error = require('../lib/error')
 const logger = require('../lib/logger')
 const config = require('../config')
@@ -63,7 +63,7 @@ exports.login = async (req, res, next) => {
   try {
     const data = await accountManager.login(req, email, password, code, deviceId)
     logger.info(req, 'Successfully logged in user with id ' + data.user.id)
-    deviceManager.updateDevice(deviceId, req.user.id)
+    // deviceManager.updateDevice(deviceId, req.user.id)
     if (data.verifyNumber) res.statusCode = 202
     return res.json(data)
   } catch (err) {

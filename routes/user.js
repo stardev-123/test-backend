@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const decimalFormatterMiddleware = require('../middleware/decimalFormatterMiddleware')
 const userController = require('../controller/userController')
-const bundleController = require('../controller/bundleController')
+// const bundleController = require('../controller/bundleController')
 
 router.put('/logout', userController.logout)
 
@@ -397,7 +397,7 @@ router.get('/coins', userController.getSupportedCoins)
  * @apiUse forbidden
  * @apiUse badRequest
  */
-router.get('/bundles', bundleController.getActiveBundles)
+// router.get('/bundles', bundleController.getActiveBundles)
 
 /**
  * @api {get} /user/{userId}/bundle/{bundleId}
@@ -418,7 +418,7 @@ router.get('/bundles', bundleController.getActiveBundles)
  * @apiUse badRequest
  * @apiUse notFound
  */
-router.get('/bundle/:bundleId', decimalFormatterMiddleware.formatOutputFields('/bundle'), bundleController.getBundle)
+// router.get('/bundle/:bundleId', decimalFormatterMiddleware.formatOutputFields('/bundle'), bundleController.getBundle)
 
 router.put('/verify', userController.verifyUser)
 

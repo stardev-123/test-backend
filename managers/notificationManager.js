@@ -1,5 +1,5 @@
 const FCM = require('fcm-push')
-const models = require('../database/models')
+// const models = require('../database/models')
 const emailManager = require('./emailManager')
 const { NOTIFICATIONS, EVENTS } = require('../lib/notifications')
 const BASE_TEMPLATE = require('../templates/email')

@@ -2,7 +2,7 @@
  * Created by laslo on 04/10/18.
  */
 
-const models = require('../database/models')
+// const models = require('../database/models')
 const error = require('../lib/error')
 const plaid = require('../managers/payment/dwolla/plaid')
 

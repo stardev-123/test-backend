@@ -1,7 +1,7 @@
 /* global it, describe */
 const request = require('supertest')
 const moment = require('moment')
-const models = require('../../database/models')
+// const models = require('../../database/models')
 
 describe('User Update Suite', () => {
   it('Verifying user - successfully checked user is not verified', async () => {

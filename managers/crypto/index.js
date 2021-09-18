@@ -3,7 +3,7 @@
  */
 const config = require('../../config')
 
-const models = require('../../database/models')
+// const models = require('../../database/models')
 const provider = require('./' + config.cryptoProvider)
 const pricesProvider = require('./prices/' + config.cryptoPricesProvider)
 

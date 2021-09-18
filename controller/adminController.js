@@ -2,7 +2,7 @@
  * Created by laslo on 04/10/18.
  */
 
-const models = require('../database/models')
+// const models = require('../database/models')
 const util = require('../lib/util')
 const constants = require('../lib/constants')
 // const scripts = require('../scripts')

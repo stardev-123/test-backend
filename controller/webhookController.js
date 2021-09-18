@@ -2,7 +2,7 @@ const moment = require('moment')
 const assetManager = require('../managers/assetManager')
 const notificationManager = require('../managers/notificationManager')
 const constants = require('../lib/constants')
-const models = require('../database/models')
+// const models = require('../database/models')
 const logger = require('../lib/logger')
 const util = require('../lib/util')
 
