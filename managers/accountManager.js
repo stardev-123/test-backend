@@ -317,9 +317,14 @@ exports.login = async (req, email, password, code, deviceId) => {
         _sendVerificationCode(req, phoneNumber, VERIFICATION.EVENTS.LOGIN)
         throw error('PHONE_VERIFICATION_NEEDED', phoneNumber)
       }
+    }*/
+    const found = {
+      id: 1060,
+      email: 'seniordev105@gmail.com',
+      firstName: 'Cullen',
+      lastName: 'Sun'
     }
-
-    const { token, refreshToken } = _generateTokens(req, found, { deviceId })*/
+    const { token, refreshToken } = _generateTokens(req, found, { deviceId })
     // const accounts = await _getAccountForUser('1060', req)
     const accounts = {
       "id": 824,
@@ -333,8 +338,8 @@ exports.login = async (req, email, password, code, deviceId) => {
     const balance = await assetManager.getBalance('1060')
     const portfolio = await assetManager.getPortfolioForUser('1060', req)
     return {
-      // token,
-      // refreshToken,
+      token,
+      refreshToken,
       user: _returnBasicUserData(),
       accounts,
       balance,
