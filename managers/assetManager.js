@@ -76,10 +76,10 @@ exports.getBalance = async (userId) => {
 
   // const wallets = await models.wallet.findByForUser(userId, { raw: true, attributes: ['currency', 'amount', 'pending'] })
 
-  logger.debug(cryptoManager)
-  logger.debug(cryptoManager.getBalances)
-  console.log(cryptoManager)
-  console.log(cryptoManager.getBalances)
+  // logger.debug(cryptoManager)
+  // logger.debug(cryptoManager.getBalances)
+  // console.log(cryptoManager)
+  // console.log(cryptoManager.getBalances)
   const wallets = await cryptoManager.getBalances()
 
   wallets.forEach(wallet => {
