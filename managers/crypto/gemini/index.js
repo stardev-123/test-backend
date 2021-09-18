@@ -4,6 +4,7 @@
  const error = require('../../../lib/error')
  const config = require('../../../config')
  const util = require('../../../lib/util')
+ const logger = require('../../../lib/logger')
  
  const { API_KEY, API_SECRET } = config.gemini
  
@@ -178,8 +179,13 @@ import { result } from 'lodash';
  }
 
  exports.getBalances = async () => {
-   const myBalances = await geminiAPI.getMyAvailableBalances()
-   return myBalances
+   try {
+    const myBalances = await geminiAPI.getMyAvailableBalances()
+    return myBalances
+   } catch(e) {
+     logger.error("BALANCE: " + e)
+     return null;
+  }
  }
 
 
