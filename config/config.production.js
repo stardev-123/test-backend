@@ -84,6 +84,10 @@ const config = {
     API_SECRET: 'VUj0Q2Uukf8HzhzX1HhefcTsVtcQjV7ETXyQYA',
     demo: true
   },
+  gemini: {
+    API_KEY: 'account-YY5QfRsP9pAgzByDqCW5',
+    API_SECRET: '3ThZFRpBFbaZATndMitUtCiiVsY8'
+  },
   analytics: 'mixpanel',
   mixpanel: {
     token: '7a8c77ba04e09305e59adc56f39e3f4f'
