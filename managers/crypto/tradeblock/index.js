@@ -115,7 +115,7 @@ const _checkPricesChange = (quickTrades, coinPrices, priceField) => {
   }
 }
 
-module.exports.buyCurrencies = async ({ id, assets, userId, single }, coinPrices, req) => {
+exports.buyCurrencies = async ({ id, assets, userId, single }, coinPrices, req) => {
   // pull not done currencies
   const currencies = assets.filter(elem => !elem.done && elem.value >= elem.settled).map(asset => asset.currency)
   const btcIndex = currencies.indexOf('BTC')
@@ -137,7 +137,7 @@ module.exports.buyCurrencies = async ({ id, assets, userId, single }, coinPrices
   return result
 }
 
-module.exports.sellCurrencies = async ({ id, assets, userId, single }, coinPrices, req) => {
+exports.sellCurrencies = async ({ id, assets, userId, single }, coinPrices, req) => {
   // pull not done currencies
   const currencies = assets.filter(elem => !elem.done && elem.value >= elem.settled).map(asset => asset.currency)
   const btcIndex = currencies.indexOf('BTC')
@@ -161,7 +161,7 @@ module.exports.sellCurrencies = async ({ id, assets, userId, single }, coinPrice
   return result
 }
 
-module.exports.getCurrentTradePrices = async (coins, req) => {
+exports.getCurrentTradePrices = async (coins, req) => {
   const btcIndex = coins.indexOf('BTC')
   if (btcIndex > -1) coins.splice(btcIndex, 1, 'XBT')
 

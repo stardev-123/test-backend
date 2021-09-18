@@ -56,14 +56,14 @@ getLinksToResources()
 
 // ********************ACCOUNT***************
 // Account represents your Dwolla Master Account that was established on dwolla.com.
-module.exports.getAccountDetails = async (accountId) => {
+exports.getAccountDetails = async (accountId) => {
   var url = config.dwolla.API + '/accounts/' + accountId
   const appToken = await _getAppToken()
   const result = await _getPostByUrl(appToken, 'get', url, 'ERROR returnig Dwolla account details', null, null)
   return result
 }
 
-module.exports.getTransfersForAccount = async (accountId) => {
+exports.getTransfersForAccount = async (accountId) => {
   var url = config.dwolla.API + '/accounts/' + accountId + '/transfers'
   const appToken = await _getAppToken()
   const response = await _getPostByUrl(appToken, 'get', url, 'ERROR returnig transfers for Dwolla account', null, null)
@@ -71,7 +71,7 @@ module.exports.getTransfersForAccount = async (accountId) => {
   return response.body._embedded.transfers
 }
 
-module.exports.getListFundingSourcesForAccount = async (accountId) => {
+exports.getListFundingSourcesForAccount = async (accountId) => {
   var url = config.dwolla.API + '/accounts/' + accountId + '/funding-sources'
   const appToken = await _getAppToken()
   const response = await _getPostByUrl(appToken, 'get', url, 'ERROR returning list of funding sources for Dwolla account with id ' + accountId, null, null)
@@ -80,7 +80,7 @@ module.exports.getListFundingSourcesForAccount = async (accountId) => {
 }
 
 // ********************CUSTOMER***************
-module.exports.createCustomer = async (customer, req) => {
+exports.createCustomer = async (customer, req) => {
   const appToken = await _getAppToken()
   let response
   try {
@@ -96,21 +96,21 @@ module.exports.createCustomer = async (customer, req) => {
   return response.headers.get('location')
 }
 
-module.exports.getCustomersById = async (customerId, req) => {
+exports.getCustomersById = async (customerId, req) => {
   var url = config.dwolla.API + '/customers/' + customerId
   const appToken = await _getAppToken()
   const response = await _getPostByUrl(appToken, 'get', url, 'ERROR returning customer with id ' + customerId, null, null, req)
 
   return response.body
 }
-module.exports.getCustomers = async () => {
+exports.getCustomers = async () => {
   const appToken = await _getAppToken()
   const response = await _getPostByUrl(appToken, 'get', 'customers', 'ERROR returning customers for dwolla master account', null, null)
 
   return response.body._embedded.customers
 }
 
-module.exports.updateCustomer = async (customerId, customer, req) => {
+exports.updateCustomer = async (customerId, customer, req) => {
   var url = config.dwolla.API + '/customers/' + customerId
   const appToken = await _getAppToken()
   const response = await _getPostByUrl(appToken, 'post', url, 'ERROR updating customer with id ' + customerId, 'SUCCESSFULLY updated Dwolla customer with id ' + customerId, customer, req)
@@ -118,7 +118,7 @@ module.exports.updateCustomer = async (customerId, customer, req) => {
   return response.body
 }
 
-module.exports.getTransfersForCustomer = async (customerId, req) => {
+exports.getTransfersForCustomer = async (customerId, req) => {
   var url = config.dwolla.API + '/customers/' + customerId + '/transfers'
   const appToken = await _getAppToken()
   const response = await _getPostByUrl(appToken, 'get', url, 'ERROR returning transfers for customer with id ' + customerId, null, null, req)
@@ -126,7 +126,7 @@ module.exports.getTransfersForCustomer = async (customerId, req) => {
   return response.body._embedded.transfers
 }
 
-module.exports.getListFundingSourcesForCustomer = async (customerId) => {
+exports.getListFundingSourcesForCustomer = async (customerId) => {
   var url = config.dwolla.API + '/customers/' + customerId + '/funding-sources'
   const appToken = await _getAppToken()
   const response = await _getPostByUrl(appToken, 'get', url, 'ERROR returning funding sources for customer with id ' + customerId, null, null)
@@ -135,7 +135,7 @@ module.exports.getListFundingSourcesForCustomer = async (customerId) => {
 }
 
 // ********************Funding Sources***************
-module.exports.getFundingSourcesByid = async (fundingId) => {
+exports.getFundingSourcesByid = async (fundingId) => {
   var url = config.dwolla.API + '/funding-sources/' + fundingId
   const appToken = await _getAppToken()
   const response = await _getPostByUrl(appToken, 'get', url, 'ERROR returning funding source by id for funding source id ' + fundingId, null, null)
@@ -144,7 +144,7 @@ module.exports.getFundingSourcesByid = async (fundingId) => {
 }
 
 // Creating and verify funding source for customer by Plaid processor_token
-module.exports.dwollaPlaidVerification = async (body, customerId, req) => {
+exports.dwollaPlaidVerification = async (body, customerId, req) => {
   var url = config.dwolla.API + '/customers/' + customerId + '/funding-sources'
   const appToken = await _getAppToken()
   const response = await _getPostByUrl(appToken, 'post', url, 'ERROR verifing dwolla with plaid for customer with id ' + customerId, null, body, req)
@@ -152,7 +152,7 @@ module.exports.dwollaPlaidVerification = async (body, customerId, req) => {
   return response.headers.get('location')
 }
 
-module.exports.chargeUser = async (fundingSourceId, amount, currency, req) => {
+exports.chargeUser = async (fundingSourceId, amount, currency, req) => {
   var requestBody = {
     _links: {
       source: {
@@ -185,7 +185,7 @@ module.exports.chargeUser = async (fundingSourceId, amount, currency, req) => {
   return { transactionId }
 }
 
-module.exports.payOutToUser = async (fundingSourceId, amount, currency, req) => {
+exports.payOutToUser = async (fundingSourceId, amount, currency, req) => {
   var requestBody = {
     _links: {
       source: {
@@ -218,7 +218,7 @@ module.exports.payOutToUser = async (fundingSourceId, amount, currency, req) => 
   return { transactionId }
 }
 
-module.exports.getTransactionById = async (transactionId, req) => {
+exports.getTransactionById = async (transactionId, req) => {
   var url = config.dwolla.API + '/transfers/' + transactionId
   const appToken = await _getAppToken()
   const response = await _getPostByUrl(appToken, 'get', url, 'ERROR returning transaction by id for transaction id ' + transactionId, null, null, req)
@@ -226,7 +226,7 @@ module.exports.getTransactionById = async (transactionId, req) => {
   return response.body
 }
 
-module.exports.deleteAllWebHooks = async () => {
+exports.deleteAllWebHooks = async () => {
   var requestBody = {
     url: config.dwolla.webhook_url,
     secret: config.dwolla.webhook_secret
@@ -244,7 +244,7 @@ module.exports.deleteAllWebHooks = async () => {
   // return response.headers.get('location');
 }
 
-module.exports.createWebHook = async () => {
+exports.createWebHook = async () => {
   var requestBody = {
     url: config.dwolla.webhook_url,
     secret: config.dwolla.webhook_secret

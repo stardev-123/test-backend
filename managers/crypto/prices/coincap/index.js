@@ -20,7 +20,7 @@ const SYMBOL_TO_ID = {
   'XZC': 'zcoin'
 }
 
-module.exports.getPrices = () => {
+exports.getPrices = () => {
   return new Promise((resolve, reject) => {
     const setting = {
       'portfolio': [{"percent": "69.18", "currency": "BTC"}, {"percent": "17.05", "currency": "ETH"}, {"percent": "8.16", "currency": "LTC"}, {"percent": "2.21", "currency": "BCH"}, {"percent": "3.41", "currency": "ZEC"}],
@@ -52,7 +52,7 @@ module.exports.getPrices = () => {
   })
 }
 
-module.exports.getHistoryMinutes = (coin, currency = 'USD', limit = 59) => {
+exports.getHistoryMinutes = (coin, currency = 'USD', limit = 59) => {
   const end = moment().valueOf()
   const start = moment().subtract(limit, 'minutes').valueOf()
   return new Promise((resolve, reject) => {
@@ -72,7 +72,7 @@ module.exports.getHistoryMinutes = (coin, currency = 'USD', limit = 59) => {
   })
 }
 
-module.exports.getHistoryHours = (coin, currency = 'USD', limit = 23) => {
+exports.getHistoryHours = (coin, currency = 'USD', limit = 23) => {
   const end = moment().valueOf()
   const start = moment().subtract(limit, 'hour').valueOf()
   return new Promise((resolve, reject) => {
@@ -92,7 +92,7 @@ module.exports.getHistoryHours = (coin, currency = 'USD', limit = 23) => {
   })
 }
 
-module.exports.getHistoryDays = (coin, currency = 'USD', limit = 364) => {
+exports.getHistoryDays = (coin, currency = 'USD', limit = 364) => {
   const end = moment().valueOf()
   const start = moment().subtract(Number(limit) + 1, 'days').valueOf()
   return new Promise((resolve, reject) => {
@@ -112,7 +112,7 @@ module.exports.getHistoryDays = (coin, currency = 'USD', limit = 364) => {
   })
 }
 
-module.exports.getHistoryPriceOnDay = (coin, currency = 'USD', date) => {
+exports.getHistoryPriceOnDay = (coin, currency = 'USD', date) => {
   const end = moment(date).endOf('day').valueOf()
   const start = moment(date).startOf('day').valueOf()
   return new Promise((resolve, reject) => {

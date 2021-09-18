@@ -5,7 +5,7 @@
 const { processEventForNotification, EVENTS } = require('../managers/notificationManager')
 const error = require('../lib/error')
 
-module.exports.sendEmail = async (req, res, next) => {
+exports.sendEmail = async (req, res, next) => {
   const { email, firstName, lastName, template, payload } = req.body
   try {
     const user = { id: email, email, firstName, lastName }

@@ -81,7 +81,7 @@ const _sendPushNotification = async (pushToken, title, body, event, payload) => 
   })
 }
 
-module.exports.EVENTS = EVENTS
+exports.EVENTS = EVENTS
 
 const _getEmailBody = (user, emailData, payload) => {
   const { subject, title, body, link = '' } = emailData
@@ -111,7 +111,7 @@ const _getEmailBody = (user, emailData, payload) => {
  * Notify service owner that his investment is done
  * @param {*} userId
  */
-module.exports.processEventForNotification = async (req, user, event, payload) => {
+exports.processEventForNotification = async (req, user, event, payload) => {
   if (config.disableAllNotifications) return
   if (!NOTIFICATIONS[event]) return
   const userId = user.id
@@ -142,7 +142,7 @@ module.exports.processEventForNotification = async (req, user, event, payload) =
   }
 }
 
-module.exports.getEmailConfirmationContent = (user) => {
+exports.getEmailConfirmationContent = (user) => {
   let html = 'You successfully confirmed your email'
   if (!NOTIFICATIONS[EVENTS.CONFIRMATION_PAGE]) return html
   const { emailData } = NOTIFICATIONS[EVENTS.CONFIRMATION_PAGE]
@@ -159,19 +159,19 @@ module.exports.getEmailConfirmationContent = (user) => {
   return html
 }
 
-module.exports.getEmailBody = (user, event, payload) => {
+exports.getEmailBody = (user, event, payload) => {
   const { emailData } = NOTIFICATIONS[event]
 
   const { html } = _getEmailBody(user, emailData, payload)
   return html
 }
 
-module.exports.getPushData = (event, payload) => {
+exports.getPushData = (event, payload) => {
   const { pushData } = NOTIFICATIONS[event]
   return pushData
 }
 
-module.exports.notifyAdminForEvent = async (req, event, payload) => {
+exports.notifyAdminForEvent = async (req, event, payload) => {
   try {
     const admins = await models.admins.findAll({ raw: true })
     const { emailData } = NOTIFICATIONS[EVENTS.ADMIN_EVENT]
@@ -185,4 +185,4 @@ module.exports.notifyAdminForEvent = async (req, event, payload) => {
   }
 }
 
-module.exports.testPush = _sendPushNotification
+exports.testPush = _sendPushNotification

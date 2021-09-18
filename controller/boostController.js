@@ -5,7 +5,7 @@ const models = require('../database/models')
 const moment = require('moment')
 
 // RECURRING
-module.exports.createRecurringPayment = async (req, res, next) => {
+exports.createRecurringPayment = async (req, res, next) => {
   const userId = req.user.id
   const { bankAccountId, amount, currency = 'USD' } = req.body
   try {
@@ -38,7 +38,7 @@ module.exports.createRecurringPayment = async (req, res, next) => {
   }
 }
 
-module.exports.getRecurringPayments = async (req, res, next) => {
+exports.getRecurringPayments = async (req, res, next) => {
   const userId = req.user.id
   const { active } = req.query
   try {
@@ -56,7 +56,7 @@ module.exports.getRecurringPayments = async (req, res, next) => {
   }
 }
 
-module.exports.stopRecurringPayments = async (req, res, next) => {
+exports.stopRecurringPayments = async (req, res, next) => {
   const userId = req.user.id
   const { recurringId } = req.params
   try {
@@ -80,7 +80,7 @@ const _checkAccountsData = (accounts) => {
   if (one) throw error('BAD_REQUEST', 'accounts need to have institution, code, mask, name and account_id tags')
 }
 
-module.exports.createUpdateSparechange = async (req, res, next) => {
+exports.createUpdateSparechange = async (req, res, next) => {
   const userId = req.user.id
   const { currency = 'USD', accounts, bankAccountId } = req.body
   const active = accounts && accounts.length > 0
@@ -121,7 +121,7 @@ module.exports.createUpdateSparechange = async (req, res, next) => {
   }
 }
 
-module.exports.getSparechanges = async (req, res, next) => {
+exports.getSparechanges = async (req, res, next) => {
   const userId = req.user.id
   try {
     let ongoingTransactions = []
@@ -152,7 +152,7 @@ module.exports.getSparechanges = async (req, res, next) => {
   }
 }
 
-module.exports.addAccountToSpearchange = async (req, res, next) => {
+exports.addAccountToSpearchange = async (req, res, next) => {
   const userId = req.user.id
   const sparechangeId = req.params.id
   const account = req.body
@@ -178,7 +178,7 @@ module.exports.addAccountToSpearchange = async (req, res, next) => {
   }
 }
 
-module.exports.removeAccountFromSparechange = async (req, res, next) => {
+exports.removeAccountFromSparechange = async (req, res, next) => {
   const userId = req.user.id
   const sparechangeId = req.params.id
   const accountId = req.params.accountId
@@ -211,14 +211,14 @@ module.exports.removeAccountFromSparechange = async (req, res, next) => {
   }
 }
 
-module.exports.testDailySparechange = async (req, res, next) => {
+exports.testDailySparechange = async (req, res, next) => {
   const sparechange = require('../cron/tasks/boost/sparechange')
   const { start, end } = req.query
   sparechange.dailyPull(start, end)
   res.send('stared daily pull')
 }
 
-module.exports.testMonthlySparechange = async (req, res, next) => {
+exports.testMonthlySparechange = async (req, res, next) => {
   const sparechange = require('../cron/tasks/boost/sparechange')
   sparechange.monthlyCharge()
   res.send('stared monthly charge')

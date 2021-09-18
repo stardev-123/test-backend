@@ -247,7 +247,7 @@ const _format = (obj, schema, formatter) => {
   }
 }
 
-module.exports.formatInputFields = (route) => {
+exports.formatInputFields = (route) => {
   const schema = inputSchema[route]
   return (req, res, next) => {
     if (!schema) next()
@@ -258,7 +258,7 @@ module.exports.formatInputFields = (route) => {
   }
 }
 
-module.exports.formatOutputFields = (route) => {
+exports.formatOutputFields = (route) => {
   const schema = outputSchema[route]
   return (req, res, next) => {
     if (!schema) next()

@@ -45,7 +45,7 @@ const _updateInvestmentState = (id, assets, currency, volume, req) => {
  * @param req
  * @returns {*}
  */
-module.exports.createInvestment = async ({ userId, type, amount, ratio, single, bundleId }, trans, req) => {
+exports.createInvestment = async ({ userId, type, amount, ratio, single, bundleId }, trans, req) => {
   const status = constants.INVESTMENTS.STATUS.PENDING
   const assets = []
   ratio.forEach(({ currency, value, percent }) => {
@@ -75,7 +75,7 @@ module.exports.createInvestment = async ({ userId, type, amount, ratio, single, 
  * @param price
  * @param req
  */
-module.exports.investmentTransactionCreate = async ({ investmentId, providerTransactionId, type, currency, volume, amount, price, status }, req) => {
+exports.investmentTransactionCreate = async ({ investmentId, providerTransactionId, type, currency, volume, amount, price, status }, req) => {
   try {
     await models.investmentTransaction.createOne({
       investmentId, providerTransactionId, type, currency, volume, amount, price, status
@@ -93,7 +93,7 @@ module.exports.investmentTransactionCreate = async ({ investmentId, providerTran
  * @param push
  * @returns boolean - is the investment done true or false
  */
-module.exports.updateInvestmentState = async (req, investment, push) => {
+exports.updateInvestmentState = async (req, investment, push) => {
   try {
     logger.debug(req, 'checking investment state for status update', { investment })
     const { id, assets, type, amount, userId } = investment.dataValues
@@ -137,6 +137,6 @@ module.exports.updateInvestmentState = async (req, investment, push) => {
   }
 }
 
-module.exports.markInvestmentFailed = async (investmentId, options) => {
+exports.markInvestmentFailed = async (investmentId, options) => {
   await models.investment.markFailed(investmentId, options)
 }

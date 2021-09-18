@@ -39,7 +39,7 @@ const _createTransport = async (tokenData) => {
   })
 }
 
-module.exports.sendEmail = async (req, to, subject, html) => {
+exports.sendEmail = async (req, to, subject, html) => {
   // setup e-mail data with unicode symbols
   const mailOptions = {
     from: '"Onramp" <' + config.email.settings.auth.user + '>', // sender address

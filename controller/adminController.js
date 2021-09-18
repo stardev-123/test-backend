@@ -28,7 +28,7 @@ const logger = require('../lib/logger')
 //   await _insertNewCurrencies(coins, req)
 // }
 
-module.exports.getSettings = async (req, res, next) => {
+exports.getSettings = async (req, res, next) => {
   try {
     const setting = await models.settings.findOne()
     res.json(setting)
@@ -38,7 +38,7 @@ module.exports.getSettings = async (req, res, next) => {
   }
 }
 
-module.exports.updateDefaultPortfolio = async (req, res, next) => {
+exports.updateDefaultPortfolio = async (req, res, next) => {
   const portfolio = req.body.portfolio
   const setting = await models.settings.findOne()
   const supportedCoins = setting.coins.map(coinData => coinData.currency)
@@ -72,7 +72,7 @@ module.exports.updateDefaultPortfolio = async (req, res, next) => {
   }
 }
 
-module.exports.updateSupportedCoins = async (req, res, next) => {
+exports.updateSupportedCoins = async (req, res, next) => {
   const setting = await models.settings.findOne()
   const coins = req.body.coins
   try {
@@ -84,7 +84,7 @@ module.exports.updateSupportedCoins = async (req, res, next) => {
   }
 }
 
-module.exports.enableDisableTrading = async (req, res, next) => {
+exports.enableDisableTrading = async (req, res, next) => {
   try {
     const setting = await models.settings.findOne()
     await models.settings.updateOne(setting, { tradingEnabled: !setting.tradingEnabled })
@@ -96,7 +96,7 @@ module.exports.enableDisableTrading = async (req, res, next) => {
   }
 }
 
-module.exports.enableDisablePostponedTrading = async (req, res, next) => {
+exports.enableDisablePostponedTrading = async (req, res, next) => {
   try {
     const setting = await models.settings.findOne()
     await models.settings.updateOne(setting, { postponedTrading: !setting.postponedTrading })
@@ -108,7 +108,7 @@ module.exports.enableDisablePostponedTrading = async (req, res, next) => {
   }
 }
 
-module.exports.enableDisableUserTrading = async (req, res, next) => {
+exports.enableDisableUserTrading = async (req, res, next) => {
   try {
     const user = await models.user.findById(req.params.userId)
     await models.user.updateOne(user, { tradingForbidden: !user.tradingForbidden })
@@ -120,7 +120,7 @@ module.exports.enableDisableUserTrading = async (req, res, next) => {
   }
 }
 
-module.exports.processUnfinishedInvestments = async (req, res, next) => {
+exports.processUnfinishedInvestments = async (req, res, next) => {
   try {
     await require('../cron/tasks/transactions/checkUnfinishedTrades').run()
     logger.info(req, 'Finished processing unfinished investments')
@@ -131,7 +131,7 @@ module.exports.processUnfinishedInvestments = async (req, res, next) => {
   }
 }
 
-module.exports.pullDailyPrices = async (req, res, next) => {
+exports.pullDailyPrices = async (req, res, next) => {
   try {
     await require('../cron/tasks/market/prices').pullDailyPrices()
     res.json({ success: true })
@@ -141,7 +141,7 @@ module.exports.pullDailyPrices = async (req, res, next) => {
   }
 }
 
-module.exports.pullHourlyPrices = async (req, res, next) => {
+exports.pullHourlyPrices = async (req, res, next) => {
   try {
     await require('../cron/tasks/market/prices').pullHourlyPrices()
     res.json({ success: true })
@@ -151,7 +151,7 @@ module.exports.pullHourlyPrices = async (req, res, next) => {
   }
 }
 
-module.exports.pullHistory = async (req, res, next) => {
+exports.pullHistory = async (req, res, next) => {
   try {
     const { limit = 30 } = req.query
     logger.info(req, 'processing history prices pull for ' + limit + ' days')
@@ -166,7 +166,7 @@ module.exports.pullHistory = async (req, res, next) => {
   }
 }
 
-module.exports.initEmailWhiteList = async (req, res, next) => {
+exports.initEmailWhiteList = async (req, res, next) => {
   try {
     const status = constants.USER.EMAIL_STATUSES.VALID
     logger.info(req, 'processing email whitlist initialization')
@@ -213,7 +213,7 @@ const _insertCoinsHistory = async (req, coins, limit) => {
   }
 }
 
-module.exports.findUser = async (req, res, next) => {
+exports.findUser = async (req, res, next) => {
   try {
     const { firstName, lastName, email } = req.query
     const conditions = []
@@ -232,7 +232,7 @@ module.exports.findUser = async (req, res, next) => {
   }
 }
 
-module.exports.updateUser = async (req, res, next) => {
+exports.updateUser = async (req, res, next) => {
   try {
     const user = await models.user.findById(req.params.userId)
     if (!user) return next(error('NOT_FOUND'))
@@ -245,7 +245,7 @@ module.exports.updateUser = async (req, res, next) => {
   }
 }
 
-module.exports.userDetails = async (req, res, next) => {
+exports.userDetails = async (req, res, next) => {
   try {
     const user = await models.user.findById(req.params.userId)
     const accounts = await accountManager.getAccountForUser(req.params.userId, req)
@@ -258,7 +258,7 @@ module.exports.userDetails = async (req, res, next) => {
   }
 }
 
-module.exports.updateUserWallet = async (req, res, next) => {
+exports.updateUserWallet = async (req, res, next) => {
   try {
     const wallet = await models.wallet.findByForUserAndCurrency(req.params.userId, req.params.currency)
     if (!wallet) return next(error('NOT_FOUND'))
@@ -270,7 +270,7 @@ module.exports.updateUserWallet = async (req, res, next) => {
   }
 }
 
-module.exports.userTransactions = async (req, res, next) => {
+exports.userTransactions = async (req, res, next) => {
   try {
     const transactions = await models.transaction.findByUserId(req.params.userId, { raw: true })
     res.json(transactions)
@@ -280,7 +280,7 @@ module.exports.userTransactions = async (req, res, next) => {
   }
 }
 
-module.exports.whitelistEmail = async (req, res, next) => {
+exports.whitelistEmail = async (req, res, next) => {
   try {
     const { email, status } = req.body
     const found = await models.emailWhitelist.findByEmail(req.body.email)
@@ -296,7 +296,7 @@ module.exports.whitelistEmail = async (req, res, next) => {
   }
 }
 
-module.exports.getWhitelists = async (req, res, next) => {
+exports.getWhitelists = async (req, res, next) => {
   try {
     const { email, status } = req.query
 
@@ -318,7 +318,7 @@ module.exports.getWhitelists = async (req, res, next) => {
   }
 }
 
-module.exports.removeToken = async (req, res, next) => {
+exports.removeToken = async (req, res, next) => {
   const token = req.body.token
   const data = sessionManager.getKey(token)
   if (data && data.refreshToken) sessionManager.removeKey(data.refreshToken)
@@ -326,7 +326,7 @@ module.exports.removeToken = async (req, res, next) => {
   res.json({ success: true })
 }
 
-module.exports.getAdmins = async (req, res, next) => {
+exports.getAdmins = async (req, res, next) => {
   try {
     const admins = await models.admins.findAll()
     res.json(admins)
@@ -336,7 +336,7 @@ module.exports.getAdmins = async (req, res, next) => {
   }
 }
 
-module.exports.addAdmin = async (req, res, next) => {
+exports.addAdmin = async (req, res, next) => {
   try {
     const admin = await models.admins.createOne(req.body)
     logger.debug(req, 'Successfully created admin with email ' + req.body.email)
@@ -347,7 +347,7 @@ module.exports.addAdmin = async (req, res, next) => {
   }
 }
 
-module.exports.getAdmin = async (req, res, next) => {
+exports.getAdmin = async (req, res, next) => {
   try {
     const found = await models.admins.findById(req.params.adminId)
     if (!found) return next(error('NOT_FOUND'))
@@ -358,7 +358,7 @@ module.exports.getAdmin = async (req, res, next) => {
   }
 }
 
-module.exports.updateAdmin = async (req, res, next) => {
+exports.updateAdmin = async (req, res, next) => {
   try {
     const found = await models.admins.findById(req.params.adminId)
     if (!found) return next(error('NOT_FOUND'))
@@ -371,7 +371,7 @@ module.exports.updateAdmin = async (req, res, next) => {
   }
 }
 
-module.exports.deleteAdmin = async (req, res, next) => {
+exports.deleteAdmin = async (req, res, next) => {
   try {
     const found = await models.admins.findById(req.params.adminId)
     if (!found) return next(error('NOT_FOUND'))

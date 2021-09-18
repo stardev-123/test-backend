@@ -114,7 +114,7 @@ const _getTransactionData = async (req, transactionId) => {
   return result
 }
 
-module.exports.verifyBankAccount = async (req, res, next) => {
+exports.verifyBankAccount = async (req, res, next) => {
   try {
     const { id, name, type, subtype, mask, primary, accessToken } = await assetManager.verifyBankAccount(req.user, req.body, req)
     logger.info(req, 'Successfully verified bank account for user with id ' + req.user.id)
@@ -142,7 +142,7 @@ module.exports.verifyBankAccount = async (req, res, next) => {
   }
 }
 
-module.exports.getBankAccounts = async (req, res, next) => {
+exports.getBankAccounts = async (req, res, next) => {
   try {
     const { id } = req.params
     let result
@@ -158,7 +158,7 @@ module.exports.getBankAccounts = async (req, res, next) => {
   }
 }
 
-module.exports.removeUserBankAccount = async (req, res, next) => {
+exports.removeUserBankAccount = async (req, res, next) => {
   try {
     const { id } = req.params
     const bankAccount = await models.bankAccount.findById(id)
@@ -179,7 +179,7 @@ module.exports.removeUserBankAccount = async (req, res, next) => {
   }
 }
 
-module.exports.setPrimaryBank = async (req, res, next) => {
+exports.setPrimaryBank = async (req, res, next) => {
   const userId = req.user.id
   const { id } = req.params
   try {
@@ -190,7 +190,7 @@ module.exports.setPrimaryBank = async (req, res, next) => {
   }
 }
 
-module.exports.getBankCardAccounts = async (req, res, next) => {
+exports.getBankCardAccounts = async (req, res, next) => {
   const userId = req.user.id
   const { code } = req.query
   try {
@@ -214,7 +214,7 @@ module.exports.getBankCardAccounts = async (req, res, next) => {
   }
 }
 
-module.exports.payOutToUserBank = async (req, res, next) => {
+exports.payOutToUserBank = async (req, res, next) => {
   const user = req.user
   const amount = req.body.amount
   const bankAccountId = req.body.bankAccountId
@@ -244,7 +244,7 @@ module.exports.payOutToUserBank = async (req, res, next) => {
   }
 }
 
-module.exports.checkInvestmentAvailability = async (req, res, next) => {
+exports.checkInvestmentAvailability = async (req, res, next) => {
   const userId = req.user.id
   if (!req.user.verifiedAtProvider) {
     const weekInvestment = await assetManager.getWeekInvestments(userId)
@@ -256,7 +256,7 @@ module.exports.checkInvestmentAvailability = async (req, res, next) => {
   res.json({ success: true })
 }
 
-module.exports.addFunds = async (req, res, next) => {
+exports.addFunds = async (req, res, next) => {
   const userId = req.user.id
   const amount = util.round(req.body.amount, 2)
   const currency = req.body.currency || 'USD'
@@ -296,7 +296,7 @@ const _checkSupportedCoins = async (currencies) => {
   return filtered
 }
 
-module.exports.makePortfolioInvestment = async (req, res, next) => {
+exports.makePortfolioInvestment = async (req, res, next) => {
   const userId = req.user.id
   const amount = util.round(req.body.amount, 2)
   let portfolio = req.body.portfolio
@@ -393,7 +393,7 @@ module.exports.makePortfolioInvestment = async (req, res, next) => {
   }
 }
 
-module.exports.makeSingleInvestment = async (req, res, next) => {
+exports.makeSingleInvestment = async (req, res, next) => {
   const userId = req.user.id
   const amount = util.round(req.body.amount, 2)
   const bankAccountId = req.body.bankAccountId
@@ -478,7 +478,7 @@ module.exports.makeSingleInvestment = async (req, res, next) => {
   }
 }
 
-module.exports.sellCryptoCurrencies = async (req, res, next) => {
+exports.sellCryptoCurrencies = async (req, res, next) => {
   const userId = req.user.id
   const ratio = req.body.ratio
   ratio.forEach(one => { one.value = Math.abs(one.amount) })
@@ -548,7 +548,7 @@ const _getHistoryInDays = async (coin, currency, limit) => {
   return _calculateChangeRate(coin, prices)
 }
 
-module.exports.checkTradePrices = async (req, res, next) => {
+exports.checkTradePrices = async (req, res, next) => {
   const supportedCoins = await cryptoManager.getSupportedCoins()
   const coinSymbols = supportedCoins.map(data => data.currency)
   try {
@@ -560,7 +560,7 @@ module.exports.checkTradePrices = async (req, res, next) => {
   }
 }
 
-module.exports.getCryptoPrices = async (req, res, next) => {
+exports.getCryptoPrices = async (req, res, next) => {
   try {
     const prices = await cryptoManager.getPrices()
     res.json(prices)
@@ -570,7 +570,7 @@ module.exports.getCryptoPrices = async (req, res, next) => {
   }
 }
 
-module.exports.getHistoryMinutes = async (req, res, next) => {
+exports.getHistoryMinutes = async (req, res, next) => {
   try {
     const { coin, currency, limit } = req.query
     if (!coin) return next(error('BAD_REQUEST', 'missing target coin query (?coin=BTC)'))
@@ -582,7 +582,7 @@ module.exports.getHistoryMinutes = async (req, res, next) => {
   }
 }
 
-module.exports.getHistoryHours = async (req, res, next) => {
+exports.getHistoryHours = async (req, res, next) => {
   try {
     const { coin, currency, limit } = req.query
     if (!coin) return next(error('BAD_REQUEST', 'missing target coin query (?coin=BTC)'))
@@ -594,7 +594,7 @@ module.exports.getHistoryHours = async (req, res, next) => {
   }
 }
 
-module.exports.getHistoryDays = async (req, res, next) => {
+exports.getHistoryDays = async (req, res, next) => {
   try {
     const { coin, currency, limit } = req.query
     if (!coin) return next(error('BAD_REQUEST', 'missing target coin query (?coin=BTC)'))
@@ -606,7 +606,7 @@ module.exports.getHistoryDays = async (req, res, next) => {
   }
 }
 
-module.exports.getHistoryChart = async (req, res, next) => {
+exports.getHistoryChart = async (req, res, next) => {
   const { limit = 7, currency = 'USD' } = req.query
   try {
     // const { portfolio } = await models.settings.findOne({ attributes: ['portfolio'] })
@@ -626,7 +626,7 @@ module.exports.getHistoryChart = async (req, res, next) => {
   }
 }
 
-module.exports.getUserTransactions = async (req, res, next) => {
+exports.getUserTransactions = async (req, res, next) => {
   try {
     const userId = req.user.id
     const { limit, offset } = req.query
@@ -664,7 +664,7 @@ const _getTransactionDescription = async (transaction) => {
   }
 }
 
-module.exports.getUserTransactionData = async (req, res, next) => {
+exports.getUserTransactionData = async (req, res, next) => {
   try {
     const { id } = req.params
     const result = await _getTransactionData(req, id)
@@ -675,7 +675,7 @@ module.exports.getUserTransactionData = async (req, res, next) => {
   }
 }
 
-module.exports.buyCryptoCurrency = async (req, res, next) => {
+exports.buyCryptoCurrency = async (req, res, next) => {
   const amount = util.round(req.body.amount, 2)
   const crypto = req.body.crypto
   const type = 'buy'
@@ -687,7 +687,7 @@ module.exports.buyCryptoCurrency = async (req, res, next) => {
   }
 }
 
-module.exports.sellCryptoCurrency = async (req, res, next) => {
+exports.sellCryptoCurrency = async (req, res, next) => {
   const ratio = req.body.ratio
   const amount = ratio[0]['amount']
   const crypto = ratio[0]['currency']

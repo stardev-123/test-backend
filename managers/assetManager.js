@@ -11,7 +11,7 @@ const config = require('../config')
 
 // const analyticsManager = require('./analytics')
 
-module.exports.checkUserSellAvailability = (req, wallets, assets) => {
+exports.checkUserSellAvailability = (req, wallets, assets) => {
   assets.forEach(asset => {
     const wallet = wallets.find(wallet => wallet.currency === asset.currency)
     if ((wallet.amount - wallet.pending) < asset.amount) {
@@ -20,7 +20,7 @@ module.exports.checkUserSellAvailability = (req, wallets, assets) => {
   })
 }
 
-module.exports.checkUserSellAvailabilityForInvestment = (req, wallets, assets) => {
+exports.checkUserSellAvailabilityForInvestment = (req, wallets, assets) => {
   assets.forEach(asset => {
     const wallet = wallets.find(wallet => wallet.currency === asset.currency)
     if ((wallet.amount - wallet.pending) < (asset.value - asset.settled)) {
@@ -29,7 +29,7 @@ module.exports.checkUserSellAvailabilityForInvestment = (req, wallets, assets) =
   })
 }
 
-module.exports.initUserWallet = async (userId, currency, trans, req) => {
+exports.initUserWallet = async (userId, currency, trans, req) => {
   const createdWallet = await models.wallet.createOne({
     currency: currency,
     userId: userId
@@ -40,7 +40,7 @@ module.exports.initUserWallet = async (userId, currency, trans, req) => {
   return createdWallet
 }
 
-module.exports.getBalanceValue = async (userId) => {
+exports.getBalanceValue = async (userId) => {
   const prices = await cryptoManager.getPrices()
   const coinPriceMap = {}
   prices.forEach(({ symbol, USD }) => { coinPriceMap[symbol] = USD })
@@ -54,7 +54,7 @@ module.exports.getBalanceValue = async (userId) => {
   return result
 }
 
-module.exports.getBalanceValueOnDate = async (userId, date) => {
+exports.getBalanceValueOnDate = async (userId, date) => {
   userId = "1060"
   if (!date) return 0
   const result = await models.sequelize.query(scripts.RETURN_USER_HOLDINGS_TOTAL_ON_DAY,
@@ -62,13 +62,13 @@ module.exports.getBalanceValueOnDate = async (userId, date) => {
   return result && result[0] ? result[0].value : 0
 }
 
-module.exports.getBalanceValueOnHour = async (userId, time) => {
+exports.getBalanceValueOnHour = async (userId, time) => {
   const result = await models.sequelize.query(scripts.RETURN_USER_HOLDINGS_TOTAL_ON_HOUR,
     { replacements: [time, userId], type: models.sequelize.QueryTypes.SELECT })
   return result && result[0] ? result[0].value : 0
 }
 
-module.exports.getBalance = async (userId) => {
+exports.getBalance = async (userId) => {
   // const prices = await cryptoManager.getBalances()
   const prices = await cryptoManager.getPrices()  
   const coinPriceMap = {}
@@ -87,14 +87,14 @@ module.exports.getBalance = async (userId) => {
   return wallets
 }
 
-module.exports.getBalanceHistory = async (userId, days) => {
+exports.getBalanceHistory = async (userId, days) => {
   const holdingHistory = await models.sequelize.query(scripts.RETURN_USER_HOLDINGS_HISTORY,
     { replacements: [days, userId], type: models.sequelize.QueryTypes.SELECT })
 
   return holdingHistory
 }
 
-module.exports.getBalanceHoursHistory = async (userId, limit) => {
+exports.getBalanceHoursHistory = async (userId, limit) => {
   const time = moment().startOf('hour').subtract(limit, 'hours').unix()
   const holdingHistory = await models.sequelize.query(scripts.RETURN_USER_HOLDINGS_HOURLY_HISTORY,
     { replacements: [time, userId], type: models.sequelize.QueryTypes.SELECT })
@@ -317,11 +317,11 @@ const _returnInstitution = async (accessToken, userId, institutionData) => {
   return institution.dataValues
 }
 
-module.exports.getWeekInvestments = _getWeekInvestments
-module.exports.chargeUserBank = _chargeUserBank
-module.exports.chargeUserBankAccount = _chargeUserBankAccount
+exports.getWeekInvestments = _getWeekInvestments
+exports.chargeUserBank = _chargeUserBank
+exports.chargeUserBankAccount = _chargeUserBankAccount
 
-module.exports.payOutToUserBank = async (userId, bankAccount, amount, currency, req) => {
+exports.payOutToUserBank = async (userId, bankAccount, amount, currency, req) => {
   logger.info(req, 'Initiating transfer for fundingSourceId ' + bankAccount.fundingSourceId + ' amount ' + amount + ' currency ' + currency)
   const wallet = await models.wallet.findByForUserAndCurrency(userId, currency, { raw: true })
 
@@ -344,7 +344,7 @@ module.exports.payOutToUserBank = async (userId, bankAccount, amount, currency, 
   return createdTransaction
 }
 
-module.exports.checkCustomerBuyAmountRules = async (user, amount, wallet, allowBankCharge, investment) => {
+exports.checkCustomerBuyAmountRules = async (user, amount, wallet, allowBankCharge, investment) => {
   if (!user.state) throw error('BAD_REQUEST', 'User is missing state')
   if (config.allowedStates && config.allowedStates.indexOf(user.state) === -1) throw error('STATE_NOT_SUPPORTED')
   if (user.verifiedAtProvider) {
@@ -354,7 +354,7 @@ module.exports.checkCustomerBuyAmountRules = async (user, amount, wallet, allowB
   }
 }
 
-module.exports.verifyBankAccount = async (user, providerResponse, req) => {
+exports.verifyBankAccount = async (user, providerResponse, req) => {
   const userId = user.id
 
   const accessToken = await paymentManager.getAccessTokenFromPublic(providerResponse.public_token)
@@ -435,9 +435,9 @@ const _getWalletsForUser = async (userId, req) => {
   }
 }
 
-module.exports.setPrimaryBank = _setPrimaryBank
-module.exports.getWalletsForUser = _getWalletsForUser
-module.exports.getPortfolioForUser = async (userId, req) => {
+exports.setPrimaryBank = _setPrimaryBank
+exports.getWalletsForUser = _getWalletsForUser
+exports.getPortfolioForUser = async (userId, req) => {
   try {
     // const setting = await models.settings.findOne({ attributes: ['portfolio', 'coins'], raw: true })
     const setting = {
@@ -459,7 +459,7 @@ module.exports.getPortfolioForUser = async (userId, req) => {
   }
 }
 
-module.exports.chargeUserInvestment = async (user, bankAccount, amount, currency, investmentId, single, trans, req) => {
+exports.chargeUserInvestment = async (user, bankAccount, amount, currency, investmentId, single, trans, req) => {
   const wallet = await models.wallet.findByForUserAndCurrency(user.id, currency)
 
   let availableInWallet = wallet.amount
@@ -483,7 +483,7 @@ module.exports.chargeUserInvestment = async (user, bankAccount, amount, currency
   return createdTransaction
 }
 
-module.exports.buyCryptoCurrencies = async (investment, coinPrices, req) => {
+exports.buyCryptoCurrencies = async (investment, coinPrices, req) => {
   const { userId, single } = investment.dataValues
 
   const trans = await DB.transaction()
@@ -505,7 +505,7 @@ module.exports.buyCryptoCurrencies = async (investment, coinPrices, req) => {
   }
 }
 
-module.exports.sellCryptoCurrencies = async (investment, coinPrices, req) => {
+exports.sellCryptoCurrencies = async (investment, coinPrices, req) => {
   const { userId, id, single } = investment.dataValues
   const trans = await DB.transaction()
   try {
@@ -538,7 +538,7 @@ module.exports.sellCryptoCurrencies = async (investment, coinPrices, req) => {
   }
 }
 
-module.exports.fundsReceived = async (transaction, trans, req) => {
+exports.fundsReceived = async (transaction, trans, req) => {
   const { userId, amount, currency } = transaction.dataValues
   const wallet = await models.wallet.findByForUserAndCurrency(userId, currency, { transaction: trans })
   let forUpdate = amount

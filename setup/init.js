@@ -7,7 +7,7 @@ const paymentManager = require('../managers/payment')
 const models = require('../database/models')
 const logger = require('../lib/logger')
 
-module.exports.initializeData = async () => {
+exports.initializeData = async () => {
   let setting = await models.settings.findOne()
   if (!setting) setting = await models.settings.createOne({})
   if (!setting.webhookId) {

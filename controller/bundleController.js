@@ -6,7 +6,7 @@
 const error = require('../lib/error')
 const logger = require('../lib/logger')
 
-module.exports.getActiveBundles = async (req, res, next) => {
+exports.getActiveBundles = async (req, res, next) => {
   try {
     const results = await models.bundles.findAllActive({ raw: true })
     res.json(results)
@@ -16,7 +16,7 @@ module.exports.getActiveBundles = async (req, res, next) => {
   }
 }
 
-module.exports.getBundles = async (req, res, next) => {
+exports.getBundles = async (req, res, next) => {
   try {
     const results = await models.bundles.findAll({ raw: true })
     res.json(results)
@@ -26,7 +26,7 @@ module.exports.getBundles = async (req, res, next) => {
   }
 }
 
-module.exports.getBundle = async (req, res, next) => {
+exports.getBundle = async (req, res, next) => {
   try {
     const bundle = await models.bundles.findById(req.params.bundleId, { raw: true })
     const coins = await models.bundleCoins.findByBundleId(req.params.bundleId, { raw: true })
@@ -37,7 +37,7 @@ module.exports.getBundle = async (req, res, next) => {
   }
 }
 
-module.exports.addBundle = async (req, res, next) => {
+exports.addBundle = async (req, res, next) => {
   let t
   try {
     t = await models.sequelize.transaction()
@@ -53,7 +53,7 @@ module.exports.addBundle = async (req, res, next) => {
   }
 }
 
-module.exports.updateBundle = async (req, res, next) => {
+exports.updateBundle = async (req, res, next) => {
   const bundleId = req.params.bundleId
   let t
   try {
@@ -72,7 +72,7 @@ module.exports.updateBundle = async (req, res, next) => {
   }
 }
 
-module.exports.deleteBundle = async (req, res, next) => {
+exports.deleteBundle = async (req, res, next) => {
   try {
     const found = await models.bundles.findById(req.params.bundleId)
     if (!found) return next(error('NOT_FOUND'))

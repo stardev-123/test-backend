@@ -116,7 +116,7 @@ import { result } from 'lodash';
    }
  }
  
- module.exports.buyCurrencies = async ({ id, assets, userId, single }, coinPrices, req) => {
+ exports.buyCurrencies = async ({ id, assets, userId, single }, coinPrices, req) => {
    // pull not done currencies
    const currencies = assets.filter(elem => !elem.done && elem.value >= elem.settled).map(asset => asset.currency)
    const btcIndex = currencies.indexOf('BTC')
@@ -138,7 +138,7 @@ import { result } from 'lodash';
    return result
  }
  
- module.exports.sellCurrencies = async ({ id, assets, userId, single }, coinPrices, req) => {
+ exports.sellCurrencies = async ({ id, assets, userId, single }, coinPrices, req) => {
    // pull not done currencies
    const currencies = assets.filter(elem => !elem.done && elem.value >= elem.settled).map(asset => asset.currency)
    const btcIndex = currencies.indexOf('BTC')
@@ -162,7 +162,7 @@ import { result } from 'lodash';
    return result
  }
  
- module.exports.getCurrentTradePrices = async (coins, req) => {
+ exports.getCurrentTradePrices = async (coins, req) => {
   //  const btcIndex = coins.indexOf('BTC')
   //  if (btcIndex > -1) coins.splice(btcIndex, 1, 'XBT')
    const quickTrades = await geminiAPI.getTradeHistory(coins[0].toLowerCase() + 'usd', {})
@@ -177,13 +177,13 @@ import { result } from 'lodash';
    }))
  }
 
- module.exports.getBalances = async () => {
+ exports.getBalances = async () => {
    const myBalances = await geminiAPI.getMyAvailableBalances()
    return myBalances
  }
 
 
-module.exports.tradeCryptoCurrency = async (amount, asset, type) => {
+exports.tradeCryptoCurrency = async (amount, asset, type) => {
   var amount1
   const data = {}
   const transaction = []

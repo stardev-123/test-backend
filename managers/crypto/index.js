@@ -16,9 +16,9 @@ const _getSupportedCoins = async () => {
   const setting = await models.settings.findOne({ attributes: ['coins'] })
   return setting.coins.map(({ currency, name, icon, description }) => ({ currency, name, icon, description }))
 }
-module.exports.getSupportedCoins = _getSupportedCoins
+exports.getSupportedCoins = _getSupportedCoins
 
-module.exports.getAllHistoryHours = async (limit) => {
+exports.getAllHistoryHours = async (limit) => {
   const coins = await _getSupportedCoins()
 
   const promises = coins.map(coin => _getCoinHistoryPrices(coin.currency, limit))
@@ -27,14 +27,14 @@ module.exports.getAllHistoryHours = async (limit) => {
   return prices
 }
 
-module.exports.buyCurrencies = provider.buyCurrencies
-module.exports.sellCurrencies = provider.sellCurrencies
-module.exports.getBalances = provider.getBalances
-module.exports.getCurrentTradePrices = provider.getCurrentTradePrices
-module.exports.tradeCryptoCurrency = provider.tradeCryptoCurrency
+exports.buyCurrencies = provider.buyCurrencies
+exports.sellCurrencies = provider.sellCurrencies
+exports.getBalances = provider.getBalances
+exports.getCurrentTradePrices = provider.getCurrentTradePrices
+exports.tradeCryptoCurrency = provider.tradeCryptoCurrency
 
-module.exports.getPrices = pricesProvider.getPrices
-module.exports.getHistoryMinutes = pricesProvider.getHistoryMinutes
-module.exports.getHistoryHours = pricesProvider.getHistoryHours
-module.exports.getHistoryDays = pricesProvider.getHistoryDays
-module.exports.getHistoryPriceOnDay = pricesProvider.getHistoryPriceOnDay
+exports.getPrices = pricesProvider.getPrices
+exports.getHistoryMinutes = pricesProvider.getHistoryMinutes
+exports.getHistoryHours = pricesProvider.getHistoryHours
+exports.getHistoryDays = pricesProvider.getHistoryDays
+exports.getHistoryPriceOnDay = pricesProvider.getHistoryPriceOnDay

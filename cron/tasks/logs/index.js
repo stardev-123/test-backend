@@ -12,7 +12,7 @@ const config = require('../../../config')
 
 const LOGS_FOLDER = path.join(__dirname, '..', '..', '..', config.log.fileLogParams.folder || 'log')
 
-module.exports.backupLogs = async () => {
+exports.backupLogs = async () => {
   if (config.log.fileLogParams.backupToS3) {
     const req = util.returnBatchRequest()
     try {

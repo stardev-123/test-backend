@@ -49,6 +49,6 @@ const _setKey = async (key, user, ...args) => {
 const _removeKey = async (key) => {
   await delAsync(key)
 }
-module.exports.getKey = _getKey
-module.exports.setKey = _setKey
-module.exports.removeKey = _removeKey
+exports.getKey = _getKey
+exports.setKey = _setKey
+exports.removeKey = _removeKey

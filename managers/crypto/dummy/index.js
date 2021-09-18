@@ -23,7 +23,7 @@
 //  * @param req
 //  * @returns {{result: Array}}
 //  */
-// module.exports.buyCurrencies = async ({ id, amount, assets, userId }, req) => {
+// exports.buyCurrencies = async ({ id, amount, assets, userId }, req) => {
 //   const result = []
 //
 //   assets.forEach(({ value, currency }) => {
@@ -34,7 +34,7 @@
 //   return { result }
 // }
 //
-// module.exports.sellCurrencies = async (ratio, req) => {
+// exports.sellCurrencies = async (ratio, req) => {
 //   const result = []
 //
 //   ratio.forEach(({ amount, currency }) => {
@@ -45,7 +45,7 @@
 //   return { result }
 // }
 //
-// module.exports.getPrices = () => {
+// exports.getPrices = () => {
 //   return new Promise((resolve, reject) => {
 //     models.settings.findOne().then(setting => {
 //       const uri = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=' + setting.coins.join(',') + '&tsyms=USD'
@@ -61,7 +61,7 @@
 //   })
 // }
 //
-// module.exports.getHistoryMinutes = (coin, currency = 'USD', limit = 59) => {
+// exports.getHistoryMinutes = (coin, currency = 'USD', limit = 59) => {
 //   return new Promise((resolve, reject) => {
 //     const uri = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + coin + '&tsym=' + currency + '&limit=' + limit
 //
@@ -75,7 +75,7 @@
 //   })
 // }
 //
-// module.exports.getHistoryHours = (coin, currency = 'USD', limit = 23) => {
+// exports.getHistoryHours = (coin, currency = 'USD', limit = 23) => {
 //   return new Promise((resolve, reject) => {
 //     const uri = 'https://min-api.cryptocompare.com/data/histohour?fsym=' + coin + '&tsym=' + currency + '&limit=' + limit
 //
@@ -89,7 +89,7 @@
 //   })
 // }
 //
-// module.exports.getHistoryDays = (coin, currency = 'USD', limit = 364) => {
+// exports.getHistoryDays = (coin, currency = 'USD', limit = 364) => {
 //   return new Promise((resolve, reject) => {
 //     const uri = 'https://min-api.cryptocompare.com/data/histoday?fsym=' + coin + '&tsym=' + currency + '&limit=' + limit
 //

@@ -1,7 +1,7 @@
 const util = require('../lib/util')
 const config = require('./')
 
-module.exports.codes = {
+exports.codes = {
   'BAD_REQUEST': {
     code: 400,
     message: 'Bad request!'

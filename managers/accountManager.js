@@ -238,11 +238,11 @@ const _getAccountForUser = async (userId, req) => {
   }
 }
 
-module.exports.getAccountForUser = _getAccountForUser
-module.exports.generateTokens = _generateTokens
-module.exports.returnBasicUserData = _returnBasicUserData
+exports.getAccountForUser = _getAccountForUser
+exports.generateTokens = _generateTokens
+exports.returnBasicUserData = _returnBasicUserData
 
-module.exports.register = async (data, req) => {
+exports.register = async (data, req) => {
   const found = await models.user.findByEmail(data.email)
   if (found) throw error('ALREADY_REGISTERED')
   const setting = await models.settings.findOne()
@@ -298,7 +298,7 @@ module.exports.register = async (data, req) => {
  * @param email
  * @param password
  */
-module.exports.login = async (req, email, password, code, deviceId) => {
+exports.login = async (req, email, password, code, deviceId) => {
   try {
     /*
     const found = await models.user.findByEmail(email, { raw: true })
@@ -346,7 +346,7 @@ module.exports.login = async (req, email, password, code, deviceId) => {
   }
 }
 
-module.exports.logout = async (token) => {
+exports.logout = async (token) => {
   const data = sessionManager.getKey(token)
   // if (data && data.refreshToken) sessionManager.removeKey(data.refreshToken)
   sessionManager.removeKey(token)
@@ -359,7 +359,7 @@ module.exports.logout = async (token) => {
  * @param confirmPassword
  * @param newPassword
  */
-module.exports.changePassword = async (req, userId, phoneNumber, oldPassword, confirmPassword, newPassword, code) => {
+exports.changePassword = async (req, userId, phoneNumber, oldPassword, confirmPassword, newPassword, code) => {
   if (newPassword !== confirmPassword) throw (error('BAD_REQUEST', "Entered new password and confirm password doesn't match"))
   const found = await models.user.findById(userId)
 
@@ -380,7 +380,7 @@ module.exports.changePassword = async (req, userId, phoneNumber, oldPassword, co
   await models.user.updateOne(found, { password: newCryptedPassword })
 }
 
-module.exports.generateAndUpdateNewPassword = async (req, userId) => {
+exports.generateAndUpdateNewPassword = async (req, userId) => {
   const found = await models.user.findById(userId)
 
   const newPassword = util.generatePassword()
@@ -396,7 +396,7 @@ module.exports.generateAndUpdateNewPassword = async (req, userId) => {
  * Sends forgot email password
  * @param email
  */
-module.exports.forgotPassword = async (req, user) => {
+exports.forgotPassword = async (req, user) => {
   const code = jwt.sign({
     email: user.email,
     userId: user.id
@@ -426,7 +426,7 @@ const _sendVerificationCode = async (req, phone, event) => {
   }
 }
 
-module.exports.sendVerificationCode = _sendVerificationCode
+exports.sendVerificationCode = _sendVerificationCode
 
 const _verifyCode = async (req, code, event) => {
   code = '' + code // converts it to string
@@ -444,7 +444,7 @@ const _verifyCode = async (req, code, event) => {
     await _verifyChangePassword(req, decoded)
   }
 }
-module.exports.verifyCode = _verifyCode
+exports.verifyCode = _verifyCode
 
 var _sendSMSCode = async (phoneNumber, code, req) => {
   // generate confirmation code and send it to user's new phone number
@@ -466,7 +466,7 @@ var _sendSMSCode = async (phoneNumber, code, req) => {
   }
 }
 
-module.exports.updateUser = async (req) => {
+exports.updateUser = async (req) => {
   const user = req.user
   const data = req.body
   try {
@@ -483,7 +483,7 @@ module.exports.updateUser = async (req) => {
   }
 }
 
-module.exports.updatePortfolio = async (userId, investments) => {
+exports.updatePortfolio = async (userId, investments) => {
   await models.portfolioInvestment.bulkCreate(investments, { ignoreDuplicates: true, updateOnDuplicate: ['percent'] })
 
   return { success: true }

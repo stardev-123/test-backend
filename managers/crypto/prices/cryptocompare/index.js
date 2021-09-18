@@ -5,7 +5,7 @@
 const Request = require('request')
 // const models = require('../../../../database/models')
 
-module.exports.getPrices = () => {
+exports.getPrices = () => {
   return new Promise((resolve, reject) => {
     models.settings.findOne().then(setting => {
       const coinQuery = setting.portfolio.map(({ currency }) => currency).join(',')
@@ -23,7 +23,7 @@ module.exports.getPrices = () => {
   })
 }
 
-module.exports.getHistoryMinutes = (coin, currency = 'USD', limit = 59) => {
+exports.getHistoryMinutes = (coin, currency = 'USD', limit = 59) => {
   return new Promise((resolve, reject) => {
     const uri = 'https://min-api.cryptocompare.com/data/histominute?fsym=' + coin + '&tsym=' + currency + '&limit=' + limit
 
@@ -37,7 +37,7 @@ module.exports.getHistoryMinutes = (coin, currency = 'USD', limit = 59) => {
   })
 }
 
-module.exports.getHistoryHours = (coin, currency = 'USD', limit = 23) => {
+exports.getHistoryHours = (coin, currency = 'USD', limit = 23) => {
   return new Promise((resolve, reject) => {
     const uri = 'https://min-api.cryptocompare.com/data/histohour?fsym=' + coin + '&tsym=' + currency + '&limit=' + limit
 
@@ -51,7 +51,7 @@ module.exports.getHistoryHours = (coin, currency = 'USD', limit = 23) => {
   })
 }
 
-module.exports.getHistoryDays = (coin, currency = 'USD', limit = 364) => {
+exports.getHistoryDays = (coin, currency = 'USD', limit = 364) => {
   return new Promise((resolve, reject) => {
     const uri = 'https://min-api.cryptocompare.com/data/histoday?fsym=' + coin + '&tsym=' + currency + '&limit=' + limit
 

@@ -28,7 +28,7 @@ const getCoinRow = ({ currency, amount, price, volume }) => {
         `</tr>`
 }
 
-module.exports.returnCoinTable = (list, total) => {
+exports.returnCoinTable = (list, total) => {
   const htmlList = list.map(row => getCoinRow(row)).join('')
   return `<div class="bill-contanter" style="box-sizing: border-box; max-width: 353px; background: #EEEFF2; border-radius: 5px; margin: 20px auto; padding: 10px;">` +
         `<table style="box-sizing: border-box; border-collapse: separate !important; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">` +

@@ -3,7 +3,7 @@ const moment = require('moment')
 const notificationManager = require('./notificationManager')
 const logger = require('../lib/logger')
 
-module.exports.notifyForRecurring = async (req, { userId, amount }) => {
+exports.notifyForRecurring = async (req, { userId, amount }) => {
   try {
     const user = await models.user.findById(userId, { raw: true })
     const date = moment().add(2, 'days').format('MM/DD/YYYY')
@@ -13,7 +13,7 @@ module.exports.notifyForRecurring = async (req, { userId, amount }) => {
   }
 }
 
-module.exports.notifyForSparechange = async (req, { id, userId, charge, accounts }) => {
+exports.notifyForSparechange = async (req, { id, userId, charge, accounts }) => {
   try {
     const user = await models.user.findById(userId, { raw: true })
     const date = moment().add(2, 'days').format('MM/DD/YYYY')
@@ -28,7 +28,7 @@ module.exports.notifyForSparechange = async (req, { id, userId, charge, accounts
   }
 }
 
-module.exports.addRecurringToFailed = async ({ id, userId, currency, amount }) => {
+exports.addRecurringToFailed = async ({ id, userId, currency, amount }) => {
   const found = await models.failedBoosts.findByRecurringId(id)
   if (!found) {
     models.failedBoosts.createOne({
@@ -43,7 +43,7 @@ module.exports.addRecurringToFailed = async ({ id, userId, currency, amount }) =
   notificationManager.processEventForNotification(null, user, notificationManager.EVENTS.INSUFFICIENT_FUND_FOR_RECURRING)
 }
 
-module.exports.addSparechangeToFailed = async ({ id, userId, currency, ongoing }) => {
+exports.addSparechangeToFailed = async ({ id, userId, currency, ongoing }) => {
   const found = await models.failedBoosts.findBySparechangeId(id)
   if (!found) {
     models.failedBoosts.createOne({
@@ -58,7 +58,7 @@ module.exports.addSparechangeToFailed = async ({ id, userId, currency, ongoing }
   notificationManager.processEventForNotification(null, user, notificationManager.EVENTS.INSUFFICIENT_FUND_FOR_SPARECHANGE)
 }
 
-module.exports.failedRecharge = async (failedBoost) => {
+exports.failedRecharge = async (failedBoost) => {
   const { count, userId, recurringId } = failedBoost.dataValues
   let event
   if (recurringId) {
