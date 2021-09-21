@@ -208,10 +208,11 @@ exports.tradeCryptoCurrency = async (amount, asset, type) => {
     'amount': amount1.toFixed(5).toString(),
     'price': quickTrades[0]['price'],
     'side': type,
-    'options': ["maker-or-cancel"]
+    // 'options': ["indication-of-interest"]
   }
   
   const result = await geminiAPI.newOrder(params)
+  console.log(result)
   data.transactionId = result["id"]
   data.status = result["is_live"]
   data.currency = 'USD'
